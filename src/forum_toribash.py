@@ -77,7 +77,7 @@ class ForumToribash:
 			self.tb5_password = cookies["tb5password"]
 			self.tb5_session_hash = cookies["tb5sessionhash"]
 			self.headers["cookie"] = f"tb5sessionhash={self.tb5_session_hash}; tb5userid={self.user_id}; tb5password={self.tb5_password}"
-		return response.headers
+		return text
 
 	def get_user_info(self, user_id: int):
 		return convert(
