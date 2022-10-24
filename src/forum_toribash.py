@@ -5,6 +5,7 @@ from html_to_json import convert
 class ForumToribash:
 	def __init__(self):
 		self.api = "https://forum.toribash.com"
+		self.recaptcha_api = "https://www.google.com/recaptcha/api2"
 		self.user_id = None
 		self.tb5_password = None
 		self.tb5_session_hash = None
@@ -19,20 +20,29 @@ class ForumToribash:
 
 	def generate_captcha(
 			self,
-			payload: str = "v=PRMRaAwB3KlylGQR57Dyk-pF&reason=q&c=<token>&k=6LfTeLkUAAAAAFXarNTDL29B5TJoMmvtADlvilA7&co=aHR0cHM6Ly9mb3J1bS50b3JpYmFzaC5jb206NDQz&hl=en&size=invisible&chr=%5B97%2C54%2C75%5D&vh=1080739656&bg=!vbugu74KAAQVHCQMbQEHDwJliyi_1YCin_bisYSgvOK-_oSWYd-CVRtB_IoKv1xL4XhGFCUVFbA8AdYR8zp8H0o87SEuvBRoEZqbHG51z2qcDbRQtJz-gSWU0FqJC7PbYnMaPu7V3guQWSx7MnutKGkcR6AGPE6-oNh5e448w67CDud6EnmyeeCxfK-4sLDl8kXBgnZQefz-RsnicYe3gaD8gGmhq7rFPHiw78zA1Qkl9_H4i1tLgzapnluB_grL8yzpGMLXx3Wh37E0OmjWivHZlmQIxnKm9sRU-IYhQbFkwyi0jDBsX9Etn_YKb0mnrHQSg770XyEyIpSW7RCjWR-p1AjA-g_iL5QI7QeMuL4WmNyYhrN4BsQR5hLD5kPUyno3J5dvfYjxOiEiESNF81oyK8gWZZJ1kEcc2zJ0UtjBR4F0jmbauD5ZII2Z1UbNVooGTe4ydmUNHfUCbqmJ1HRirPuqCXDU868gi9deYB83grzG1c_S9KbUt74zilNn6See0MQs2qXIDGZzZQUwkLE5Xg617COHODV14GNc22eg_Ctj1jlE9SbOcUhdVVKy1-AbH-gpCD9BzsbmLibCQl6uaMYthuqkqLCDDjvmjpo-iIcPNauq29djP6muvQoPqQ1HNBMdV0Y5P64TrfGLenU8zirLIM2k0XnbfoY_iTDyVw763qDhKGy-I3O-k8-VPGTXKWyS5wah9brnPQ9nKPjufsBvxIyDjzUYsK1I0dZfiUoVYTconHc-OH7yXQxjlWseGkrnYjLqjFZIInwVbj0dWozXVhE8-1kLyFDpMdDDY4da1oSAGq2oJKbFDSrqzLJPf98DQJwAT9jTM0rdk9i9ZrIaLP2Eihx2CNJw8SUVe8yHp0mb13Kel3-oLqtMYay2iO2P8XYQplvH1165et2NBgGkRUCTpMd7l-9979U8w93TjUGoxok*"):
+			hl: str = "en",
+			vh: int = 1080739656,
+			cb: str = "yqzvhrcuefd",
+			chr: str = "[97,54,75]",
+			v: str = "PRMRaAwB3KlylGQR57Dyk-pF",
+			key: str = "6LfTeLkUAAAAAFXarNTDL29B5TJoMmvtADlvilA7",
+			co: str = "aHR0cHM6Ly9mb3J1bS50b3JpYmFzaC5jb206NDQz",
+			bg: str = "!vbugu74KAAQVHCQMbQEHDwJliyi_1YCin_bisYSgvOK-_oSWYd-CVRtB_IoKv1xL4XhGFCUVFbA8AdYR8zp8H0o87SEuvBRoEZqbHG51z2qcDbRQtJz-gSWU0FqJC7PbYnMaPu7V3guQWSx7MnutKGkcR6AGPE6-oNh5e448w67CDud6EnmyeeCxfK-4sLDl8kXBgnZQefz-RsnicYe3gaD8gGmhq7rFPHiw78zA1Qkl9_H4i1tLgzapnluB_grL8yzpGMLXx3Wh37E0OmjWivHZlmQIxnKm9sRU-IYhQbFkwyi0jDBsX9Etn_YKb0mnrHQSg770XyEyIpSW7RCjWR-p1AjA-g_iL5QI7QeMuL4WmNyYhrN4BsQR5hLD5kPUyno3J5dvfYjxOiEiESNF81oyK8gWZZJ1kEcc2zJ0UtjBR4F0jmbauD5ZII2Z1UbNVooGTe4ydmUNHfUCbqmJ1HRirPuqCXDU868gi9deYB83grzG1c_S9KbUt74zilNn6See0MQs2qXIDGZzZQUwkLE5Xg617COHODV14GNc22eg_Ctj1jlE9SbOcUhdVVKy1-AbH-gpCD9BzsbmLibCQl6uaMYthuqkqLCDDjvmjpo-iIcPNauq29djP6muvQoPqQ1HNBMdV0Y5P64TrfGLenU8zirLIM2k0XnbfoY_iTDyVw763qDhKGy-I3O-k8-VPGTXKWyS5wah9brnPQ9nKPjufsBvxIyDjzUYsK1I0dZfiUoVYTconHc-OH7yXQxjlWseGkrnYjLqjFZIInwVbj0dWozXVhE8-1kLyFDpMdDDY4da1oSAGq2oJKbFDSrqzLJPf98DQJwAT9jTM0rdk9i9ZrIaLP2Eihx2CNJw8SUVe8yHp0mb13Kel3-oLqtMYay2iO2P8XYQplvH1165et2NBgGkRUCTpMd7l-9979U8w93TjUGoxok*",
+			parameters: str = "v={v}&reason=q&c=<token>&k={key}&co={co}&hl={hl}&size=invisible&chr={chr}&vh={vh}&bg={bg}"):
 		anchor = requests.get(
-			"https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LfTeLkUAAAAAFXarNTDL29B5TJoMmvtADlvilA7&co=aHR0cHM6Ly9mb3J1bS50b3JpYmFzaC5jb206NDQz&hl=ru&v=PRMRaAwB3KlylGQR57Dyk-pF&size=invisible&cb=yqzvhrcuefd",
-			headers=self.headers).text
-		recaptcha_token = anchor.split('recaptcha-token" value="')[1].split('">')[0]
-		data = payload.replace("<token>", recaptcha_token)
+				f"{self.recaptcha_api}/anchor?ar=1&k={key}&co={co}&hl={hl}&v={v}&size=invisible&cb={cb}",
+				headers=self.headers).text
+		recaptcha_token = anchor.split(
+				'recaptcha-token" value="')[1].split('">')[0]
+		data = parameters.replace("<token>", recaptcha_token)
+		self.headers["content-type"] = "application/x-www-form-urlencoded"
 		response = requests.post(
-			"https://www.google.com/recaptcha/api2/reload?k=6LfTeLkUAAAAAFXarNTDL29B5TJoMmvtADlvilA7",
+			f"{self.recaptcha_api}/reload?k={key}",
 			data=data,
-			headers={
-				"Content-Type": "application/x-www-form-urlencoded"
-			}).text
-		if "rresp" in response:
-			return response.split('"rresp","')[1].split('"')[0]
+			headers=self.headers).text
+		return response.split(
+				'"rresp","'
+			)[1].split('"')[0] if "rresp" in response else response
 
 	def register(
 			self,
