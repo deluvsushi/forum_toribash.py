@@ -33,7 +33,7 @@ class ForumToribash:
 				f"{self.recaptcha_api}/anchor?ar=1&k={key}&co={co}&hl={hl}&v={v}&size=invisible&cb={cb}",
 				headers=self.headers).text
 		recaptcha_token = anchor.split(
-				'recaptcha-token" value="')[1].split('">')[0]
+			'recaptcha-token" value="')[1].split('">')[0]
 		data = parameters.replace("<token>", recaptcha_token)
 		self.headers["content-type"] = "application/x-www-form-urlencoded"
 		response = requests.post(
