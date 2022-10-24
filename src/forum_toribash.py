@@ -30,8 +30,8 @@ class ForumToribash:
 			bg: str = "!vbugu74KAAQVHCQMbQEHDwJliyi_1YCin_bisYSgvOK-_oSWYd-CVRtB_IoKv1xL4XhGFCUVFbA8AdYR8zp8H0o87SEuvBRoEZqbHG51z2qcDbRQtJz-gSWU0FqJC7PbYnMaPu7V3guQWSx7MnutKGkcR6AGPE6-oNh5e448w67CDud6EnmyeeCxfK-4sLDl8kXBgnZQefz-RsnicYe3gaD8gGmhq7rFPHiw78zA1Qkl9_H4i1tLgzapnluB_grL8yzpGMLXx3Wh37E0OmjWivHZlmQIxnKm9sRU-IYhQbFkwyi0jDBsX9Etn_YKb0mnrHQSg770XyEyIpSW7RCjWR-p1AjA-g_iL5QI7QeMuL4WmNyYhrN4BsQR5hLD5kPUyno3J5dvfYjxOiEiESNF81oyK8gWZZJ1kEcc2zJ0UtjBR4F0jmbauD5ZII2Z1UbNVooGTe4ydmUNHfUCbqmJ1HRirPuqCXDU868gi9deYB83grzG1c_S9KbUt74zilNn6See0MQs2qXIDGZzZQUwkLE5Xg617COHODV14GNc22eg_Ctj1jlE9SbOcUhdVVKy1-AbH-gpCD9BzsbmLibCQl6uaMYthuqkqLCDDjvmjpo-iIcPNauq29djP6muvQoPqQ1HNBMdV0Y5P64TrfGLenU8zirLIM2k0XnbfoY_iTDyVw763qDhKGy-I3O-k8-VPGTXKWyS5wah9brnPQ9nKPjufsBvxIyDjzUYsK1I0dZfiUoVYTconHc-OH7yXQxjlWseGkrnYjLqjFZIInwVbj0dWozXVhE8-1kLyFDpMdDDY4da1oSAGq2oJKbFDSrqzLJPf98DQJwAT9jTM0rdk9i9ZrIaLP2Eihx2CNJw8SUVe8yHp0mb13Kel3-oLqtMYay2iO2P8XYQplvH1165et2NBgGkRUCTpMd7l-9979U8w93TjUGoxok*",
 			parameters: str = "v={v}&reason=q&c=<token>&k={key}&co={co}&hl={hl}&size=invisible&chr={chr}&vh={vh}&bg={bg}"):
 		anchor = requests.get(
-				f"{self.recaptcha_api}/anchor?ar=1&k={key}&co={co}&hl={hl}&v={v}&size=invisible&cb={cb}",
-				headers=self.headers).text
+			f"{self.recaptcha_api}/anchor?ar=1&k={key}&co={co}&hl={hl}&v={v}&size=invisible&cb={cb}",
+			headers=self.headers).text
 		recaptcha_token = anchor.split(
 			'recaptcha-token" value="')[1].split('">')[0]
 		data = parameters.replace("<token>", recaptcha_token)
