@@ -1,4 +1,4 @@
-class DiscordNames {
+class DiscordName {
 	constructor() {
 		this.api = "https://api-v2.discord.name"
 		this.headers = {
@@ -25,4 +25,4 @@ class DiscordNames {
 	}
 }
 
-module.exports = {DiscordNames}
+module.exports = {DiscordName}
