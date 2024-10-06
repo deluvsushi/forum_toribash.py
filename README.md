@@ -1,9 +1,14 @@
-# forum_toribash.py
-Web-API for [forum.toribash.com](https://forum.toribash.com) website which is offical forum of toribash 
+# discord_name.js
+Web-API for [discord.name](https://discord.name/) website which is used to get discord user account info by id
 
 ## Example
-```python
-import forum_toribash
-forum_toribash = forum_toribash.ForumToribash()
-forum_toribash.login(username="", password="")
+```JavaScript
+async function main() {
+	const { DiscordName } = require("./discord_name.js")
+	const discordName = new DiscordName()
+	const userInfo = await discordName.getUserInfo("userId")
+	console.log(userInfo)
+}
+
+main()
 ```
